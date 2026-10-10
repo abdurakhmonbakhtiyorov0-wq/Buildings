@@ -4,6 +4,11 @@ const nextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   reactCompiler: true,
+  images: {
+    // Фото новостроек из публичного хранилища Supabase (bucket project-media).
+    remotePatterns: [
+      { protocol: "https", hostname: "*.supabase.co", pathname: "/storage/v1/object/public/project-media/**", search: "" },    ],
+  },
   turbopack: {
     rules: {
       "*.css": {

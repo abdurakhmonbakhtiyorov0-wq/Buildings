@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# NOVARO — фронтенд
 
-## Getting Started
+Next.js 16 (App Router) + Tailwind CSS 4 + JavaScript.
 
-First, run the development server:
+## Запуск
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Сборка: `npm run build`, затем `npm start`.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Данные
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Если в `.env.local` заданы `SUPABASE_URL` и `SUPABASE_ANON_KEY` (см. `.env.example`), проекты читаются из Supabase, а заявки сохраняются в таблицу `leads`.
+- Без них сайт работает на локальной копии `data/projects.json` (те же 287 проектов), а форма заявки отвечает «демо-режим».
+- Данные кэшируются на час (`'use cache'` + `cacheLife('hours')` в `lib/data.js`).
+- Чтобы брать данные из своего Express API, замените функцию `loadRows()` в `lib/data.js`: она должна вернуть массив проектов в том же виде, что `data/projects.json`.
 
-## Learn More
+## Фото новостроек
 
-To learn more about Next.js, take a look at the following resources:
+1. Один раз запустите `../media.sql` в SQL Editor Supabase: создастся публичное хранилище `project-media`.
+2. Положите фото в папку `frontend/photos`, назвав файлы по slug проекта: `diamond-city.jpg` (обложка), `diamond-city-2.jpg`, `diamond-city-plan.png` (генплан), `diamond-city-render.webp` (рендер). JPG, PNG или WebP до 5 МБ.
+3. Добавьте в `.env.local` секретный ключ `SUPABASE_SERVICE_ROLE_KEY` и запустите `npm run upload-photos` (можно с подписью: `npm run upload-photos -- --caption="Фото: сайт застройщика"`).
+4. Проекты без фото показывают схематичные дома цвета статуса.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Языки
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Русский, узбекский (латиница) и английский: адреса `/ru/...`, `/uz/...`, `/en/...`.
+- Тексты интерфейса — в `dictionaries/ru.js`, `uz.js`, `en.js`. Новую строку добавляйте во все три файла.
+- `proxy.js` перенаправляет адрес без языка (например, `/novostroyki`) на язык из cookie `NEXT_LOCALE`, иначе — из настроек браузера, иначе на русский.
+- Переключатель языка в шапке сохраняет выбор в cookie и оставляет текущие фильтры.
+- Названия ЖК, адреса и описания проектов хранятся на языке источника и не переводятся.
 
-## Deploy on Vercel
+## Страницы
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Все адреса ниже начинаются с языка, например `/uz/novostroyki`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Адрес | Что на ней |
+|---|---|
+| `/` | Поиск, счётчики, подборки, застройщики, прогноз, цены по районам, заявка |
+| `/novostroyki` | Каталог: регион и район, фильтры, сортировка, страницы |
+| `/zhk/[slug]` | Проект: планировки, условия, ход стройки, источники, заявка |
+| `/budushchee` | Что построят: проекты по годам, крупные массивы |
+| `/zastroyshchiki`, `/zastroyshchiki/[slug]` | Застройщики и их проекты |
+| `/o-dannykh` | Источники и уровни достоверности |
