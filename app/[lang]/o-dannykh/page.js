@@ -46,7 +46,7 @@ export default async function AboutDataPage() {
       <ul className="mt-4 flex flex-col gap-3">
         {QUALITY_KEYS.map((key) => (
           <li key={key} className="flex flex-wrap items-center gap-3 rounded-2xl border border-line bg-white p-5">
-            <QualityBadge quality={key} />
+            <QualityBadge quality={key} d={t.d} />
             <span className="text-muted">{t.d.quality[key].text}</span>
             <span className="ml-auto text-sm font-semibold">
               {t.d.home.inDb(t.num(projects.filter((p) => p.quality === key).length))}

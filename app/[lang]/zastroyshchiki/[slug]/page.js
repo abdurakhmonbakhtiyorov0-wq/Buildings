@@ -67,7 +67,7 @@ async function DeveloperDetails({ params }) {
           </h2>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {g.projects.map((p) => (
-              <ProjectCard key={p.slug} project={p} />
+              <ProjectCard key={p.slug} project={p} t={t} />
             ))}
           </div>
         </section>

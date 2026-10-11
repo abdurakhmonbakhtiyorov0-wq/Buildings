@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { QualityBadge, StatusBadge, Tag } from "@/components/Badges";
 import ProjectCover from "@/components/ProjectCover";
-import { getI18n } from "@/lib/i18n";
 
 export function projectTags(p, d, t) {
   const tags = [];
@@ -11,8 +10,8 @@ export function projectTags(p, d, t) {
   return tags;
 }
 
-export default async function ProjectCard({ project: p }) {
-  const t = await getI18n();
+// t — i18nFor(язык): карточка общая для серверных страниц и клиентского каталога.
+export default function ProjectCard({ project: p, t }) {
   const { d } = t;
   const place = t.place(p.district ?? p.region);
   const meta = [place, p.developer?.name, d.housingClass[p.housingClass]].filter(Boolean).join(" · ");
@@ -33,8 +32,8 @@ export default async function ProjectCard({ project: p }) {
     <article className="flex flex-col overflow-hidden rounded-2xl border border-line bg-white transition-shadow duration-200 hover:shadow-lg">
       <div className="relative h-36">
         <ProjectCover project={p} className="h-full" />
-        <StatusBadge status={p.status} className="absolute left-3 top-3" />
-        <QualityBadge quality={p.quality} className="absolute right-3 top-3" />
+        <StatusBadge status={p.status} d={d} className="absolute left-3 top-3" />
+        <QualityBadge quality={p.quality} d={d} className="absolute right-3 top-3" />
       </div>
       <div className="flex flex-1 flex-col gap-3 p-4">
         <div>

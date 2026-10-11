@@ -116,11 +116,11 @@ async function ProjectDetails({ params }) {
       </nav>
 
       <div className="mt-4 flex flex-wrap gap-2">
-        <StatusBadge status={p.status} />
+        <StatusBadge status={p.status} d={d} />
         {p.housingClass && (
           <span className="rounded-full bg-navy-100 px-2.5 py-1 text-xs font-semibold text-navy-900">{d.housingClass[p.housingClass]}</span>
         )}
-        <QualityBadge quality={p.quality} />
+        <QualityBadge quality={p.quality} d={d} />
       </div>
       <h1 className="mt-3 font-display text-3xl font-semibold leading-tight sm:text-4xl">{t.name(p)}</h1>
       <p className="mt-2 text-lg text-muted">
@@ -246,7 +246,7 @@ async function ProjectDetails({ params }) {
 
           <Panel title={pr.sources}>
             <p className="flex flex-wrap items-center gap-3">
-              <QualityBadge quality={p.quality} />
+              <QualityBadge quality={p.quality} d={d} />
               <span className="text-muted">{d.quality[p.quality]?.text}</span>
             </p>
             <ul className="flex flex-col gap-2">
@@ -288,7 +288,7 @@ async function ProjectDetails({ params }) {
           <SectionTitle className="mb-5">{pr.nearby}</SectionTitle>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {similar.map((x) => (
-              <ProjectCard key={x.slug} project={x} />
+              <ProjectCard key={x.slug} project={x} t={t} />
             ))}
           </div>
         </section>

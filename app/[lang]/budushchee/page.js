@@ -89,7 +89,7 @@ export default async function FuturePage() {
               >
                 <div className="flex min-w-0 flex-1 flex-col gap-2.5">
                   <div className="flex flex-wrap gap-2">
-                    <StatusBadge status={m.status} />
+                    <StatusBadge status={m.status} d={d} />
                     <span className="rounded-full bg-news-soft px-2.5 py-1 text-xs font-bold text-news-text">
                       {m.sources[0]?.name ?? f.sourceUnknown}
                     </span>

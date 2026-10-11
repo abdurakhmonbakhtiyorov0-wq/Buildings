@@ -63,7 +63,7 @@ async function HomeProjects({ searchParams, projects }) {
       </div>
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {cards.map((p) => (
-          <ProjectCard key={p.slug} project={p} />
+          <ProjectCard key={p.slug} project={p} t={t} />
         ))}
       </div>
     </>
